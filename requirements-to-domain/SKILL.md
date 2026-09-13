@@ -1,19 +1,19 @@
 ---
 name: requirements-to-domain
-description: Clarify informal software requirements into a confirmed DOMAIN.md through a one-question-at-a-time interview or a complete client discussion checklist. Use for business requirements discovery and specification revisions; does not generate design diagrams or implement code.
+description: Use when the user provides scattered or disorganized software requirements, feature descriptions, or client discussion notes and asks to organize, clarify, or make sense of them. Resolve gaps, ambiguities, and contradictions to produce a requirements specification for subsequent object-oriented analysis and design (OOAD). Not for summarization alone, design diagrams, or code implementation.
 ---
 
 # Requirements to Domain
 
-Use the user's language (default Traditional Chinese). Convert informal requirements into explicit domain concepts, responsibilities, rules, and scenarios before designing software. Preserve scope: examples are not automatically required features, and missing details are not permission to invent business policy.
+Use the user's language (default Traditional Chinese). Translate the English question examples and option labels below into that language. Convert informal requirements into explicit domain concepts, responsibilities, rules, and scenarios before designing software. Preserve scope: examples are not automatically required features, and missing details are not permission to invent business policy.
 
 ## Workflow
 
 ### 0. Choose the clarification mode
 
-At the start of a new requirements intake, before asking business clarification questions, display ONE selection question: 「這次要用哪種方式確認需求？」 with two options:
-- 「逐題確認」: ask one question at a time, adapt to answers, then consolidate pending client questions.
-- 「一次列出完整確認清單」: present all currently identifiable questions and candidate answers together for direct discussion with the client.
+At the start of a new requirements intake, before asking business clarification questions, display ONE selection question: "How would you like to clarify the requirements?" with two options:
+- "One question at a time": ask one question at a time, adapt to answers, then consolidate pending client questions.
+- "Complete clarification checklist": present all currently identifiable questions and candidate answers together for direct discussion with the client.
 
 Use the available selection tool and keep the turn open until answered, using interruptible waits of at most 60 seconds where available. Do not send a final answer while this selection is pending. If no selection tool is available, ask in conversation. This workflow-choice question does not need the business-policy pending option. If the user already explicitly selected a mode, honor it without asking again. Preserve the choice through follow-ups and allow switching modes without losing answers or question IDs.
 
@@ -25,13 +25,13 @@ Maintain a working decision ledger in conversation context: confirmed facts, unr
 
 ### 2. Clarify in the selected mode
 
-Both modes use the discovery lenses and completion criteria below. Recommendations are proposals, not confirmed requirements. Every business question offers 「待確認（需向客戶確認）」, including follow-ups.
+Both modes use the discovery lenses and completion criteria below. Recommendations are proposals, not confirmed requirements. Every business question offers "Pending (requires client confirmation)", including follow-ups.
 
 #### Mode A: Interview one question at a time
 
 Use a probing, concrete interview: examine ambiguous terms, challenge contradictions respectfully, and ask what happens in realistic scenarios. Each turn presents exactly ONE decision question, not a bundle disguised as one question. Prioritize questions whose answers determine other questions.
 
-When `request_user_input_async` is available, display one question with 1–2 concrete suggested answers, putting the recommendation first with a brief consequence, and ALWAYS include a final selectable option: 「待確認（需向客戶確認）」. Allow free-text answers. Do not make the user choose implementation details to answer a business question. If selection tools are unavailable, ask one concise question in conversation and explicitly allow the user to answer 「待確認」.
+When `request_user_input_async` is available, display one question with 1–2 concrete suggested answers, putting the recommendation first with a brief consequence, and ALWAYS include a final selectable option: "Pending (requires client confirmation)". Allow free-text answers. Do not make the user choose implementation details to answer a business question. If selection tools are unavailable, ask one concise question in conversation and explicitly allow the user to answer "Pending".
 
 Selecting pending defers the question; it does not approve the recommended answer or authorize carrying the uncertainty into final deliverables. Record the original question, scenario, candidate answers and consequences, whether it is core, and affected rules/use cases. Continue with independent questions, even when the deferred question is core. Defer dependent questions with their dependency noted instead of assuming an answer or repeatedly pressing for one. This pending option also applies to follow-up clarification rounds.
 
@@ -41,9 +41,9 @@ After displaying an asynchronous question, keep the turn open until the reply ar
 
 After inspecting the requirements and relevant context, present all currently identifiable material questions together in the conversation. Do not conduct the sequential interview first and do not open a separate interactive selector for every question. The deliverable is a copyable discussion checklist, suitable for using with the client immediately.
 
-Group questions by business topic and order prerequisite decisions before dependent questions. Give each question a stable ID (Q01, Q02, ...), one concrete decision/scenario, 1–3 meaningful candidate answers with their consequences, and a final 「待確認（需向客戶確認）」 option. Mark recommendations, core/non-core status, and affected behavior. Allow an alternative free-text answer. For conditional questions, state the condition explicitly rather than assuming the preceding answer. Use readable numbered blocks; avoid very wide tables.
+Group questions by business topic and order prerequisite decisions before dependent questions. Give each question a stable ID (Q01, Q02, ...), one concrete decision/scenario, 1–3 meaningful candidate answers with their consequences, and a final "Pending (requires client confirmation)" option. Mark recommendations, core/non-core status, and affected behavior. Allow an alternative free-text answer. For conditional questions, state the condition explicitly rather than assuming the preceding answer. Use readable numbered blocks; avoid very wide tables.
 
-Include a brief summary of known scope and confirmed facts, and a compact answer example such as 「Q01：A；Q02：待確認；Q03：自訂答案……」. Explain that new questions may emerge from client answers; “complete” means complete against currently available information, not a guarantee that no further clarification will be needed.
+Include a brief summary of known scope and confirmed facts, and a compact answer example such as "Q01: A; Q02: Pending; Q03: Custom answer...". Explain that new questions may emerge from client answers; “complete” means complete against currently available information, not a guarantee that no further clarification will be needed.
 
 Once the complete checklist has been presented, end the turn and let the user discuss it with the client. Do not create DOMAIN.md or diagrams at this point. Accept full or partial answers by question ID; retain unanswered items as unresolved. On follow-up, list only newly discovered, conflicting, or still-unanswered questions, preserving IDs and the selected batch mode. Do not silently switch to sequential questioning. Move to the client-confirmation checkpoint when reconciling answers, reusing the existing checklist rather than duplicating it.
 
