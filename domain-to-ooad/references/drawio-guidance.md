@@ -23,8 +23,17 @@ Produce standard uncompressed draw.io XML: `mxfile` containing named `diagram` p
 - Clearly mark manual external work; do not turn a human action into an automated integration.
 - Include confirmed rejection/failure paths where they affect the design. Pending cancellation or recovery rules remain pending.
 
+### Activity diagram pages
+
+- Generate only when activity diagrams are selected. Use editable UML activity notation: initial node, action nodes, directed control flows, decision/merge diamonds with guards, and activity-final nodes.
+- Split into focused business processes or use cases. Use swimlanes when actor/system responsibility matters; keep manual external actions in the correct lane.
+- Label outgoing decision edges with confirmed conditions. Account for alternative outcomes without inventing business rules; unresolved branches must be visibly pending.
+- Use fork/join bars only for confirmed concurrent behavior. A decision between alternatives is not a parallel fork. Distinguish a flow-final from an activity-final if both are needed.
+- Show loops and exits clearly; avoid dead ends except explicitly modeled termination or pending paths. Trace important actions and guards to specification rules.
+- For activity-only requests, do not require method signatures or generate additional class/sequence pages.
+
 ### Review criteria
 
-Follow a scenario through the sequence diagram and confirm each receiving object owns the indicated responsibility. Ensure state changes and recalculation occur at the confirmed points. Verify the class model carries information required by the sequence. Avoid diagrams that merely route every action through one generic service while domain objects have no justified responsibilities.
+Apply checks only to selected types. Follow sequences to verify receiving-object responsibilities; when class diagrams are also selected, verify they carry the information and operations needed by the sequences. Trace activities from initial to final nodes, checking guards, loops, lane ownership, and fork/join semantics. Compare shared scenarios across selected types for consistent ordering and outcomes. Ensure state changes and recalculation occur at confirmed points. Avoid routing every action through one generic service while domain objects have no justified responsibilities.
 
 Use readable spacing, consistent class widths, and no overlapping text or arrows where avoidable. Split overcrowded diagrams into focused pages while retaining consistent names. XML structural checks do not establish layout quality; report visual validation separately.
