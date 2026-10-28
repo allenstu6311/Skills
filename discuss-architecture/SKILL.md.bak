@@ -1,0 +1,172 @@
+---
+name: discuss-architecture
+description: Grounded workflow for architecture and refactoring discussions whose conclusions depend on an existing system, inspected implementation, shared architectural premise, or proposed structural change. Use when reviewing or changing responsibility boundaries, component or module ownership, dependency direction, state ownership, data flow, lifecycle coordination, public contracts, migration strategy, or architectural tradeoffs. Also use when the user challenges an earlier architectural recommendation or asks whether an existing structure should be reorganized. Do not trigger for standalone definitions or generic programming explanations that do not depend on a real or proposed system.
+---
+
+# Discuss Architecture
+
+Keep architecture discussions grounded in the real system, available evidence, and latest premise shared with the user. Do not silently invent structure, remove relevant complexity, change the agreed baseline, or treat a conceptual sketch as a validated solution.
+
+## Establish the requested outcome
+
+Determine whether the user wants:
+
+- description or explanation of the current system;
+- diagnosis of a concrete problem;
+- review or comparison of candidate directions;
+- a migration plan; or
+- implementation.
+
+Match the response and actions to that scope. Explanation, review, diagnosis, or comparison does not authorize redesign or implementation; a migration plan does not authorize code changes.
+
+If the request is clear, proceed without unnecessary confirmation. Ask only when an unknown would materially change the conclusion, scope, risk, or implementation.
+
+## Preserve the working baseline
+
+Treat the latest structure, terminology, constraints, and decisions established with the user as the working baseline. Do not silently replace boundaries, ownership, dependency direction, persistence, public interfaces, layout responsibility, lifecycle behavior, migration scope, or accepted terminology.
+
+A different direction may be presented as a candidate without prior approval. Do not treat it as the new baseline, an agreed decision, or authorization to implement until the user accepts it.
+
+When a proposal changes the baseline, state:
+
+- what changes and remains unchanged;
+- why it is being considered;
+- what coupling, cost, or risk it introduces; and
+- what requires user agreement.
+
+When challenged or contradicted by new evidence:
+
+1. Answer the challenge directly and recheck the earlier claim.
+2. State whether it still holds; withdraw or narrow it explicitly if not.
+3. Explain the evidence behind the revision and what conclusions remain valid.
+4. Present any replacement direction as a new candidate.
+5. Ask for agreement only before adopting it as the baseline or implementing it.
+
+Do not defend a recommendation merely to preserve consistency or silently switch explanations.
+
+## Separate epistemic levels
+
+Distinguish these categories when they could otherwise be confused:
+
+- **Observed:** Directly supported by inspected code, artifacts, runtime behavior, tests, logs, or user-supplied facts.
+- **Inferred:** Derived from evidence but not directly verified.
+- **Unknown:** Relevant information not yet inspected or established.
+- **Candidate:** A direction being evaluated but not accepted.
+- **Decision:** A direction explicitly agreed with the user.
+
+Do not present an inference as an observation, a candidate as a decision, or an illustration as existing structure. Do not invent names of modules, services, components, hooks, stores, events, tables, endpoints, or layers and imply they exist; mark illustrative names as hypothetical.
+
+Use explicit labels only when the distinction matters. Do not mechanically label simple, unambiguous answers.
+
+## Inspect in proportion to the claim
+
+Inspect enough of the real system to support the size of the claim:
+
+- Local responsibility: inspect the relevant artifact and direct collaborators.
+- State ownership: inspect readers, writers, mutation paths, and synchronization.
+- Module boundaries: inspect dependency direction and public contracts.
+- Lifecycle or asynchronous behavior: inspect initialization, cleanup, ordering, cancellation, retries, and recovery.
+- Migration: inspect existing behavior, compatibility, operational constraints, and verification coverage.
+
+Do not claim to understand the whole architecture from an isolated file or simplified excerpt. If inspection is unavailable, state the limitation and offer only bounded inferences, discovery steps, or candidates.
+
+## Diagnose before prescribing
+
+Do not infer a defect from surface traits alone: file size, dependency count, nesting, naming, visual complexity, number of imports or methods, or use of a framework pattern.
+
+Identify the actual problem and its evidence. Relevant problems include unclear ownership, unrelated reasons to change, hidden or circular coupling, uncontrolled mutation, unsafe sequencing, duplicated policy, unstable contracts, poor isolation or testability, change amplification, inconsistent recovery, or boundaries that do not match owned behavior.
+
+If evidence is insufficient, state what must be inspected or measured instead of declaring a defect.
+
+## Represent difficulty and evaluate candidates
+
+Account for constraints relevant to the proposed change:
+
+- containment and layout responsibility;
+- state ownership, readers, writers, and mutation paths;
+- control flow, events, side effects, initialization, and cleanup;
+- asynchronous ordering, cancellation, retry, and recovery;
+- behavior shared across visible boundaries;
+- external dependencies, persistence, caches, and public contracts;
+- tests and observable behavior that must remain stable.
+
+Do not simplify these constraints out and then call the result a solution. A diagram, wrapper, interface, renamed module, or pseudocode block is a sketch unless it exposes the important ownership, contracts, behavior, and coordination.
+
+Use these terms accurately:
+
+- **Example:** Demonstrates an idea without claiming to match the system.
+- **Sketch:** Shows possible structure while omitting implementation details.
+- **Candidate:** A direction evaluated against the current system.
+- **Plan:** A sequenced, verifiable path from the current system.
+- **Solution:** A direction supported by evidence and a credible implementation or migration path.
+
+For each candidate, identify:
+
+- the problem and supporting evidence;
+- what changes and remains unchanged;
+- the current and intended owner of moved responsibilities;
+- dependencies or coupling introduced;
+- migration, compatibility, operational, and testing costs;
+- unresolved questions; and
+- verification criteria.
+
+Compare viable directions using criteria relevant to the actual problem, such as ownership clarity, change isolation, lifecycle safety, compatibility, testability, cost, runtime or operational complexity, migration risk, and reversibility. Do not call a direction cleaner, simpler, scalable, maintainable, or correct without defining the comparison criteria. Do not force one recommendation when unresolved product, operational, or organizational constraints determine the choice.
+
+## Propose executable change
+
+Call a proposal a plan or solution only when it defines:
+
+1. Observable behavior and contracts that remain unchanged.
+2. The smallest coherent responsibility to change.
+3. Current and intended ownership.
+4. Affected interfaces and dependencies.
+5. Migration sequence and verification for each step.
+6. Failure, rollback, and recovery considerations.
+7. High-risk coordination or ordering constraints.
+
+Preserve unrelated layout, interfaces, behavior, and ownership unless explicitly in scope. Prefer independently reviewable, behavior-preserving, testable, and reversible steps that expose incorrect assumptions early. If required details are unknown, propose discovery or candidates rather than a finished plan.
+
+## Handle implementation carefully
+
+Before implementation, verify from the request or an explicit decision that code or artifact changes are authorized. Do not request redundant confirmation when authorization is already clear.
+
+During implementation:
+
+- preserve behavior outside the agreed scope;
+- avoid opportunistic architectural changes;
+- keep changes aligned with the accepted direction;
+- verify assumptions as evidence appears;
+- surface contradictions that materially affect the plan;
+- preserve public contracts unless changes were agreed;
+- test the boundary being changed; and
+- report deviations from the plan.
+
+If implementation shows the accepted architecture is not viable, explain the evidence and present a revised candidate. Do not silently substitute a new design.
+
+## Calibrate the response
+
+Match detail to the request:
+
+- **Focused question:** answer directly, state the relevant evidence or assumption, main consequence, and important unknown.
+- **Architecture review:** describe the evidenced structure, concrete problem, ownership and dependency implications, candidates, risks, and unknowns.
+- **Migration plan:** define preserved behavior, ownership and interface transitions, sequenced verification, and rollback considerations.
+
+Do not make every discussion a full audit. Include only the structure necessary to keep the conclusion accurate and transparent.
+
+## Final response check
+
+Before responding, verify:
+
+- Does the response answer the request and stay within authorized scope?
+- Are evidence, inference, unknowns, candidates, and decisions distinguishable?
+- Is the shared baseline preserved and any revision explicit?
+- Are hypothetical structures labeled?
+- Is the claimed problem supported rather than inferred from surface complexity?
+- Are ownership, dependencies, behavior, sequencing, costs, and risks represented in proportion to the recommendation?
+- Is a sketch being mislabeled as a solution?
+- Is agreement obtained before adopting a new baseline or implementing a directional change?
+
+## Clarification and Discussion
+
+- If any critical architectural context, constraint, or dependency is missing, ambiguous, or incomplete, proactively raise specific questions to discuss with the user before forming a final candidate or plan.
+- Encourage collaborative discussion whenever trade-offs require business, operational, or organizational input.
