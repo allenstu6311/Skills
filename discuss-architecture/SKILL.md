@@ -1,53 +1,53 @@
 ---
 name: discuss-architecture
-description: 分析既有或擬議系統的責任邊界、狀態歸屬、依賴方向、生命週期、公開契約與遷移方案。適用於架構檢視、重構取捨，以及重新檢查先前的架構建議；也適用於局部問題，只要判斷涉及上述關係。不適用於單純命名、語法或一般概念解釋。
+description: Analyze responsibility boundaries, state ownership, dependency direction, lifecycle, public contracts, and migration options in existing or proposed systems. Use for architecture reviews, refactoring tradeoffs, and reassessing earlier architecture recommendations, including local questions involving these relationships. Not for naming alone, syntax, or generic conceptual explanations.
 ---
 
-# 架構討論
+# Discuss Architecture
 
-以具體問題與系統證據評估結構。目標是釐清責任與取捨，避免套用架構模式卻沒有解決實際問題。
+Evaluate structure against concrete problems and system evidence. Clarify responsibilities and tradeoffs rather than applying architecture patterns without solving an actual problem.
 
-## 先確認問題，再判斷結構
+## Establish the problem before judging the structure
 
-辨識使用者想改善的具體問題，以及支持它的證據。
+Identify the specific problem the user wants to improve and the evidence supporting it.
 
-不要僅憑檔案大小、依賴數量、巢狀深度、命名或框架模式，就認定存在架構缺陷。應指出實際影響，例如修改擴散、責任混雜、隱藏耦合、不受控的狀態修改、生命週期衝突或契約不穩定。
+Do not infer an architecture defect solely from file size, dependency count, nesting, naming, or framework patterns. Identify concrete effects such as change amplification, mixed responsibilities, hidden coupling, uncontrolled mutation, lifecycle conflicts, or unstable contracts.
 
-若問題尚未成立，先釐清或檢查，不急著提出拆分方案。
+If the problem is not yet established, clarify or inspect before proposing extraction.
 
-## 依照待判斷的邊界檢查系統
+## Inspect the relationships relevant to the boundary
 
-- **責任邊界：** 檢查相關實作、直接協作者與共同變更原因。
-- **狀態歸屬：** 追查初始化、讀取、修改、同步與清理路徑。
-- **依賴方向：** 檢查呼叫關係、公開契約與反向依賴。
-- **生命週期：** 檢查執行順序、非同步協調、取消、重試與復原。
-- **遷移：** 檢查相容性、外部使用者、持久化資料與驗證方式。
+- **Responsibility boundaries:** Inspect the implementation, direct collaborators, and shared reasons to change.
+- **State ownership:** Trace initialization, readers, writers, synchronization, and cleanup.
+- **Dependency direction:** Inspect calls, public contracts, and reverse dependencies.
+- **Lifecycle:** Inspect ordering, asynchronous coordination, cancellation, retries, and recovery.
+- **Migration:** Inspect compatibility, external consumers, persisted data, and verification methods.
 
-不要因為狀態顯示在某個元件、呼叫鏈很長或事件很多，就直接決定歸屬。應綜合判斷生命週期、修改權限與使用者。
+Do not assign ownership merely because state is displayed in a component, a call chain is long, or many events exist. Consider lifecycle, mutation authority, and consumers together.
 
-## 用具體行為檢驗候選邊界
+## Test candidate boundaries against concrete behavior
 
-提出責任移動、抽取或依賴調整時，說明：
+When proposing responsibility moves, extraction, or dependency changes, explain:
 
-- 哪個問題因此改善。
-- 責任目前由誰承擔，預計移到哪裡。
-- 移動後，哪些既有資料流或行為需要重新銜接。
-- 引入哪些介面、耦合與協調成本。
-- 用什麼方式驗證原有行為仍然成立。
+- Which problem improves.
+- Who owns the responsibility now and who would own it afterward.
+- Which existing data flows or behaviors need reconnecting after the move.
+- Which interfaces, coupling, and coordination costs are introduced.
+- How preserved behavior will be verified.
 
-不要把重要的狀態共享、版面責任、非同步順序或錯誤復原從示意中省略，再把示意當成可行方案。尚未驗證的結構應稱為草圖或候選方向。
+Do not omit important shared state, layout responsibility, asynchronous ordering, or recovery from a sketch and then treat it as a viable solution. Call unverified structures sketches or candidates.
 
-## 比較方案與規劃遷移
+## Compare options and plan migration
 
-依實際問題選擇比較標準，例如責任清晰度、修改隔離、生命週期安全、相容性、可測試性、執行成本與遷移風險。
+Choose criteria relevant to the actual problem, such as ownership clarity, change isolation, lifecycle safety, compatibility, testability, runtime cost, and migration risk.
 
-不要只以「更乾淨」「更簡單」或「更好維護」作為結論；說明具體改善與新增代價。若選擇取決於尚未確認的限制，明確指出。
+Do not conclude only that a direction is cleaner, simpler, or easier to maintain. Explain concrete improvements and added costs. Identify unresolved constraints that determine the choice.
 
-提供遷移計畫時，至少交代：
+A migration plan should at least define:
 
-- 必須維持的行為與契約。
-- 責任、介面與依賴如何轉移。
-- 可逐步驗證的實作順序。
-- 重要失敗情境與回復方式。
+- Behavior and contracts that must remain stable.
+- How responsibilities, interfaces, and dependencies transition.
+- An implementation sequence with verifiable steps.
+- Important failure scenarios and rollback or recovery methods.
 
-深度依變更風險調整。局部問題可以簡短作答；跨模組或涉及生命週期的變更，應呈現足以判斷可行性的證據。
+Scale depth to the risk. Local questions can receive concise answers; changes spanning modules or lifecycles need enough evidence to assess feasibility.
