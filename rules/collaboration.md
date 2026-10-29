@@ -45,3 +45,13 @@ Explain why a non-obvious calculation, condition, or sequence is necessary, incl
 When a technical term or variable name is useful, explain its meaning in context and connect it to the reason for the code. For example, rather than only saying "prefix maximum end time," explain that this value is the latest recording end time seen so far, and that overlapping recordings make checking only the current recording's end time insufficient.
 
 Keep comments concise and proportional to the difficulty. Add explanation where it helps the reader; do not comment every line or invent reasons unsupported by the code.
+
+## Separate function documentation from implementation notes
+
+For JavaScript and TypeScript, use a `/** ... */` documentation comment immediately above a function when callers need an explanation of its purpose or contract. Prefer this for exported or reused functions and for internal functions whose inputs, business rules, or behavior are not obvious from the name and signature. Keep useful function documentation in this form rather than replacing it with `//`.
+
+Document what the caller needs to use the function correctly: purpose, parameter meanings, return value, and relevant constraints. Include units, time basis, inclusive/exclusive boundaries, mutation or other side effects, and failure or empty-result behavior only where they matter. Use `@param`, `@returns`, `@throws`, or a short example when they clarify the contract; do not mechanically add every tag. In TypeScript, avoid repeating types already expressed by the signature; explain their meaning and constraints instead.
+
+Use `//` inside a function for implementation reasoning: why a calculation rounds a certain way, why ordering matters, which overlap or edge case a check handles, or why an obvious alternative would be incorrect. Keep these local explanations near the relevant code rather than filling the function's hover documentation with algorithm walkthroughs. If a detail affects callers, document its observable contract above the function as well, without duplicating the internal explanation.
+
+Do not add documentation merely to repeat an obvious name or signature, and do not comment every small helper. Keep both forms concise and in plain language. For other languages, use their native documentation-comment convention for the same distinction.
