@@ -55,3 +55,11 @@ Document what the caller needs to use the function correctly: purpose, parameter
 Use `//` inside a function for implementation reasoning: why a calculation rounds a certain way, why ordering matters, which overlap or edge case a check handles, or why an obvious alternative would be incorrect. Keep these local explanations near the relevant code rather than filling the function's hover documentation with algorithm walkthroughs. If a detail affects callers, document its observable contract above the function as well, without duplicating the internal explanation.
 
 Do not add documentation merely to repeat an obvious name or signature, and do not comment every small helper. Keep both forms concise and in plain language. For other languages, use their native documentation-comment convention for the same distinction.
+
+## Use names that explain their purpose
+
+Name variables and parameters for what they represent or how they are used. Avoid single-letter names and cryptic abbreviations such as `h`, `w`, or `v` when readers must inspect surrounding code to infer their meaning. For example, use `recordingBarHeight` for the height of the recording bar rather than `h`. Include units when they would otherwise be ambiguous, such as `startMs` or `timeoutSeconds`.
+
+Short conventional names are acceptable in a small, clear scope, such as loop indices or familiar mathematical coordinates. Prefer the shortest name that remains unambiguous; do not replace a clear `height` with a long name that adds no useful meaning. Do not use a comment merely to explain an avoidable abbreviation when a clearer name would suffice.
+
+Apply this principle to code being added or changed. Do not rename unrelated code or change public contracts solely to enforce it without authorization.
