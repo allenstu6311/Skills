@@ -87,6 +87,18 @@ On every invocation, it first asks you to confirm the topics, code scope, and ex
 
 The notes summarize verified current logic/data flow, important constraints, and confirmed decisions with known reasons. Missing rationale stays unknown; accepted future changes are distinguished from current code. This command updates project notes only; it does not implement code, edit global rules, create Codex AGENTS.md entrypoints, or commit/push unless separately requested. Existing note language is preserved; new notes use the user's language unless requested otherwise.
 
+The default CLAUDE.md outline follows this reading order:
+
+1. Domain purpose and responsibility boundaries.
+2. Core concepts.
+3. Main flows and data flow.
+4. Module responsibilities and state ownership.
+5. Rules and constraints to preserve.
+6. Confirmed decisions: choice, rationale, and tradeoffs.
+7. Change entrypoints, verification, and open questions.
+
+Related sections may be merged, and sections without useful content may be omitted. There is no requirement to fill all seven headings, duplicate information, or invent missing facts. Existing useful organization and unrelated instructions are preserved; the outline does not require a wholesale rewrite. Manual-only invocation and the three-part scope confirmation remain unchanged.
+
 Manual-only invocation is configured using Claude's `disable-model-invocation: true` frontmatter and Codex's `policy.allow_implicit_invocation: false` in `agents/openai.yaml`. Install the whole skill directory, including `agents/`, to retain the Codex policy. The shared rules installer does not install this skill. To install just this skill after it is published:
 
 ```sh

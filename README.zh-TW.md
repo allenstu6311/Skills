@@ -87,6 +87,18 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-Rules.
 
 筆記整理已查證的現有邏輯、資料流、重要限制，以及已確認且理由有依據的決策。缺少理由就標示未知，已接受但未實作的方向與現有程式分開記錄。此指令只更新專案筆記；不會順便實作、修改全域規則、建立 Codex AGENTS.md 入口或提交推送，除非另有明確要求。既有筆記保留原語言；新筆記預設使用你的語言。
 
+CLAUDE.md 預設依下列順序組織：
+
+1. 領域目的與責任邊界。
+2. 核心概念。
+3. 主要流程與資料流。
+4. 模組分工與狀態歸屬。
+5. 必須維持的規則與限制。
+6. 已確認決策：選擇、理由與代價。
+7. 修改入口、驗證方式與待確認事項。
+
+可合併相關章節，或省略沒有實質內容的章節，不必填滿七個標題、重複資訊或編造缺漏事實。更新既有筆記時保留有用的組織方式與其他指示，不為了套用架構而整份重寫。只能指令觸發及三項範圍確認流程維持不變。
+
 手動觸發限制分別設定於 Claude 的 frontmatter `disable-model-invocation: true`，以及 Codex 的 `agents/openai.yaml` 內 `policy.allow_implicit_invocation: false`。安裝時請保留完整 skill 目錄（包含 `agents/`），才能保留 Codex 的限制。共用規則安裝腳本不會安裝此 skill。發布後若只要安裝這一個 skill：
 
 ```sh
