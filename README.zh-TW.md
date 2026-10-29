@@ -2,7 +2,7 @@
 
 [English](README.md) | [繁體中文](README.zh-TW.md)
 
-可跨專案重用的 agent skills 與共用合作原則。Skills 在相關任務中載入；共用規則在每次工作階段開始時提供指引。兩者分開安裝。
+可跨專案重用的 agent skills 與共用合作原則。Skills 依各自設定，在相關任務中載入或只能由明確指令觸發；共用規則在每次工作階段開始時提供指引。兩者分開安裝。
 
 ## 儲存庫結構
 
@@ -74,6 +74,24 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-Rules.
 | [code-fault-tree](code-fault-tree/SKILL.md) | 從操作出發，根據程式碼追查故障症狀、原因與實際處理方式。 |
 | [design-decision](design-decision/SKILL.md) | 在相關程式變更點評估設計模式取捨，或討論、審查設計模式的選擇。 |
 | [discuss-architecture](discuss-architecture/SKILL.md) | 根據系統證據評估責任邊界、狀態歸屬、依賴、生命週期與遷移取捨。 |
+| [update-domain-notes](update-domain-notes/SKILL.md) | 只能明確指令觸發；先確認主題、程式範圍與 CLAUDE.md 寫入位置，再記錄已確認決策及已查證的領域邏輯與資料流。 |
+
+## 按需更新領域筆記
+
+此 skill 只能用明確指令執行，不會在討論或修改程式後自動啟用：
+
+- Claude Code：`/update-domain-notes`
+- Codex：`$update-domain-notes`
+
+每次執行都會先請你確認主題、程式範圍，以及確切的 CLAUDE.md 寫入位置。即使指令參數已指定三者，仍會等你確認後才深入讀碼或寫檔；不沿用上次執行的確認。接著更新指定檔案，或建立你已同意但尚不存在的檔案，保留其他內容。對話很長時，不會預設全部納入。
+
+筆記整理已查證的現有邏輯、資料流、重要限制，以及已確認且理由有依據的決策。缺少理由就標示未知，已接受但未實作的方向與現有程式分開記錄。此指令只更新專案筆記；不會順便實作、修改全域規則、建立 Codex AGENTS.md 入口或提交推送，除非另有明確要求。既有筆記保留原語言；新筆記預設使用你的語言。
+
+手動觸發限制分別設定於 Claude 的 frontmatter `disable-model-invocation: true`，以及 Codex 的 `agents/openai.yaml` 內 `policy.allow_implicit_invocation: false`。安裝時請保留完整 skill 目錄（包含 `agents/`），才能保留 Codex 的限制。共用規則安裝腳本不會安裝此 skill。發布後若只要安裝這一個 skill：
+
+```sh
+npx skills add allenstu6311/Skills --skill update-domain-notes -g -a claude-code -a codex
+```
 
 ## 更新與本機開發
 

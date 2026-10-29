@@ -2,7 +2,7 @@
 
 [English](README.md) | [繁體中文](README.zh-TW.md)
 
-Reusable agent skills and shared collaboration rules. Skills load when relevant; shared rules provide guidance at the start of each session. Install them separately.
+Reusable agent skills and shared collaboration rules. Skills load when relevant or when explicitly invoked, depending on their invocation policy; shared rules provide guidance at the start of each session. Install them separately.
 
 ## Repository structure
 
@@ -74,6 +74,24 @@ To uninstall, remove Claude's `allenstu-collaboration.md` and/or only the Codex 
 | [code-fault-tree](code-fault-tree/SKILL.md) | Trace an operation through failure symptoms, causes, and actual handling found in code. |
 | [design-decision](design-decision/SKILL.md) | Assess design-pattern tradeoffs at relevant change points, or discuss and review pattern choices. |
 | [discuss-architecture](discuss-architecture/SKILL.md) | Evaluate responsibility boundaries, state ownership, dependencies, lifecycle, and migration tradeoffs using system evidence. |
+| [update-domain-notes](update-domain-notes/SKILL.md) | Explicit command only. Confirm topics, code scope, and exact CLAUDE.md paths, then record confirmed decisions and verified domain logic/data flow. |
+
+## Update domain notes on demand
+
+This skill runs only by explicit command, not automatically after discussion or code changes. Invoke it with:
+
+- Claude Code: `/update-domain-notes`
+- Codex: `$update-domain-notes`
+
+On every invocation, it first asks you to confirm the topics, code scope, and exact CLAUDE.md output paths. Even when command arguments already specify them, it waits for confirmation before deep code inspection or writing. Approval from a previous invocation is not reused. It then updates those files, or creates approved missing files, while preserving unrelated content. A long conversation is not automatically included in full.
+
+The notes summarize verified current logic/data flow, important constraints, and confirmed decisions with known reasons. Missing rationale stays unknown; accepted future changes are distinguished from current code. This command updates project notes only; it does not implement code, edit global rules, create Codex AGENTS.md entrypoints, or commit/push unless separately requested. Existing note language is preserved; new notes use the user's language unless requested otherwise.
+
+Manual-only invocation is configured using Claude's `disable-model-invocation: true` frontmatter and Codex's `policy.allow_implicit_invocation: false` in `agents/openai.yaml`. Install the whole skill directory, including `agents/`, to retain the Codex policy. The shared rules installer does not install this skill. To install just this skill after it is published:
+
+```sh
+npx skills add allenstu6311/Skills --skill update-domain-notes -g -a claude-code -a codex
+```
 
 ## Updates and local development
 
